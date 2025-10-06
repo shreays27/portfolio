@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shreyas G Portfolio</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* 🎥 Background Video Styling */
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  opacity: 0.85; /* slightly dimmed for readability */
+}
+</style>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
+
+body {
+  min-height:100vh;
+  display:flex;
+  background: url("https://source.unsplash.com/1920x1080/?nature,forest") no-repeat center center/cover;
+  color:#fff;
+  transition:background 0.2s;
+}
+body.dark-mode {
+  background: linear-gradient(135deg,#d5d8df,#e3e6eb);
+  color:#f3f4f6;
+}
+body::before {
+  content:"";
+  position:fixed;
+  top:0; left:0; right:0; bottom:0;
+  background:rgba(0,0,0,0.5);
+  z-index:-1;
+}
+
+/* Sidebar */
+.sidebar {
+  width:220px;
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  flex-direction:column;
+  padding:20px;
+  position:fixed;
+  top:0; bottom:0; left:0;
+}
+.sidebar a {
+  padding:12px;
+  margin:5px 0;
+  color:#fff;
+  text-decoration:none;
+  border-radius:6px;
+  transition:0.3s;
+  display:block;
+}
+.sidebar a:hover, .sidebar a.active { background:rgba(255,255,255,0.2); }
+
+/* Content */
+.content {
+  margin-left:240px;
+  flex:1;
+  padding:30px;
+  animation: fadeIn 0.6s ease-in;
+}
+h2 { color:#a78bfa; margin-bottom:15px; }
+h3 { color:#f472b6; margin:10px 0 5px; }
+p, li { line-height:1.5; }
+ul { margin:10px 0 10px 20px; }
+
+.page { display:none; }
+.page.active { display:block; }
+
+/* Hero */
+#home { text-align:center; margin-top:100px; }
+#home h1 { font-size:3rem; color:#f472b6; margin-bottom:20px; }
+#home p { font-size:1.2rem; color:#ddd; max-width:600px; margin:0 auto; }
+#home a {
+  display:inline-block;
+  margin-top:30px;
+  padding:12px 20px;
+  background:#a78bfa;
+  color:#fff;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:bold;
+  transition:0.3s;
+}
+#home a:hover { background:#fff; color:#000; }
+
+/* About Me */
+#about { text-align:center; }
+#about img {
+  width:180px; height:180px; border-radius:50%;
+  margin-bottom:20px; border:4px solid #fff;
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Contact */
+#contact { max-width: 450px; margin: 40px auto; padding: 20px; font-family: Arial, sans-serif; }
+#contact h2 { text-align: center; margin-bottom: 25px; font-size: 2rem; color: #222; }
+.contact-row {
+  display: flex; align-items: center; gap: 15px; margin-bottom: 15px; padding: 12px 16px;
+  border-radius: 12px; background: linear-gradient(135deg, #020202, #020202);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-decoration: none; color: inherit;
+  opacity: 0; transform: translateY(20px); animation: fadeUp 0.6s forwards;
+}
+.contact-row:nth-child(2) { animation-delay: 0.1s; }
+.contact-row:nth-child(3) { animation-delay: 0.2s; }
+.contact-row:nth-child(4) { animation-delay: 0.3s; }
+.contact-row:nth-child(5) { animation-delay: 0.4s; }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+.contact-row:hover { transform: translateY(-6px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+.contact-img { width:50px; height:50px; border-radius:50%; object-fit:cover; flex-shrink:0; }
+.contact-row:hover .contact-img { animation:bounce 0.4s; box-shadow:0 0 15px rgba(0,0,0,0.2); }
+@keyframes bounce {0%,100%{transform:scale(1);}50%{transform:scale(1.1);} }
+.contact-row span { font-weight:500; font-size:1rem; transition: transform 0.3s ease, opacity 0.3s ease; }
+.contact-row:hover span { transform: scale(1.05); opacity: 0.9; }
+.contact-row.gmail:hover { background: #ffebee; color: #d93025; }
+.contact-row.phone:hover { background: #e8f5e9; color: #43a047; }
+.contact-row.linkedin:hover { background: #e3f2fd; color: #0077b5; }
+.contact-row.github:hover { background: #eceff1; color: #333; }
+
+/* Cards container for Projects & Certificates */
+.cards-container { display:grid; gap:20px; grid-template-columns:1fr; padding:0 10px; }
+@media(min-width:600px){ .cards-container{grid-template-columns:repeat(2,1fr);} }
+@media(min-width:900px){ .cards-container{grid-template-columns:repeat(3,1fr);} }
+
+/* Card styling with hover effect */
+.card {
+  background: rgba(255,255,255,0.15);
+  padding: 15px;
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+.card a {
+  display: inline-block; margin-top:8px; padding:6px 10px; background: rgba(255,255,255,0.25);
+  color:#fff; border-radius:6px; text-decoration:none; font-size:0.85rem; transition:0.3s;
+}
+.card a:hover { background:#fff; color:#000; }
+
+.project-img { width:100%; height:180px; object-fit:cover; border-radius:8px; margin-bottom:10px; transition: transform 0.3s, box-shadow 0.3s; }
+.project-img:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+
+/* Resume section buttons */
+.resume-buttons { margin-top:10px; }
+.resume-buttons a { display:inline-block; margin-right:10px; padding:10px 15px; border-radius:6px; background:rgba(255,255,255,0.25); color:#fff; text-decoration:none; transition:0.3s; }
+.resume-buttons a:hover { background:#fff; color:#000; }
+
+/* Certificates layout */
+.certificates-container {
+  display:flex;
+  flex-wrap: wrap;
+  gap:20px;
+}
+.certificate-card {
+  flex:1 1 calc(33% - 20px);
+  background: rgba(255,255,255,0.1);
+  padding:10px;
+  border-radius:10px;
+  text-align:center;
+}
+.certificate-card iframe, .certificate-card img {
+  width:100%;
+  height:250px;
+  border-radius:8px;
+  object-fit:cover;
+  margin-bottom:10px;
+}
+.certificate-card a {
+  display:inline-block; margin:5px; padding:6px 10px; background: rgba(255,255,255,0.25);
+  color:#fff; border-radius:6px; text-decoration:none; font-size:0.85rem;
+}
+.certificate-card a:hover { background:#fff; color:#000; }
+
+@keyframes fadeIn { from {opacity:0; transform:translateY(15px);} to {opacity:1; transform:translateY(0);} }
+
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <a href="#" onclick="showPage('home')" id="link-home" class="active"><i class="fa-solid fa-house"></i> Home</a>
+  <a href="#" onclick="showPage('about')" id="link-about"><i class="fa-solid fa-user"></i> About Me</a>
+  <a href="#" onclick="showPage('projects')" id="link-projects"><i class="fa-solid fa-code"></i> Projects</a>
+  <a href="#" onclick="showPage('resume')" id="link-resume"><i class="fa-solid fa-file"></i> Resume</a>
+  <a href="#" onclick="showPage('contact')" id="link-contact"><i class="fa-solid fa-envelope"></i> Contact</a>
+  <a href="#" onclick="showPage('certificates')" id="link-certificates"><i class="fa-solid fa-certificate"></i> Certificates</a>
+ 
+</div>
+
+<!-- Content -->
+<div class="content">
+
+<!-- Home -->
+<section id="home" class="page active">
+  <h1>Shreyas G</h1>
+  <p>Aspiring software developer seeking a role where I can apply my Python, SQL, and problem-solving skills to build impactful solutions.</p>
+  <a href="#" onclick="showPage('about')">More About Me</a>
+</section>
+
+<!-- About -->
+<section id="about" class="page">
+  <h2>About Me</h2>
+  <img src="images/shreyas.jpg" alt="Profile Photo">
+  <p>Hello! I’m <b>Shreyas G</b>, an aspiring software developer passionate about solving real-world problems with technology.</p>
+  <ul>
+    <li>✔️ Proficient in Python, SQL, and problem-solving</li>
+    <li>✔️ Built projects like Q&A with LangChain, Employee Management System, and Weather Dashboard</li>
+    <li>✔️ Passionate about continuous learning and innovation</li>
+  </ul>
+</section>
+
+<!-- Projects -->
+<section id="projects" class="page">
+  <h2>Projects</h2>
+  <div class="cards-container">
+    <div class="card">
+      
+      <h3>LangChain Q&A using LLMs</h3>
+      <p>Developed a Q&A system using LangChain and OpenAI that extracts relevant answers from PDFs and URLs. Implemented semantic search and vector indexing to improve query accuracy.</p>
+      <ul>
+        <li><b>Tech:</b> Python, LangChain, OpenAI API</li>
+        <li><b>Features:</b> PDF/URL ingestion, semantic search, embeddings</li>
+      </ul>
+      <a href="https://github.com/yourusername/langchain-qa" target="_blank">🔗 GitHub Repo</a>
+    </div>
+
+    <div class="card">
+      
+      <h3>Employee Management System</h3>
+      <p>Built a full-stack system to manage employee records including CRUD operations, role-based access, and data persistence. Optimized SQL queries for better performance.</p>
+      <ul>
+        <li><b>Tech:</b> Python, Flask/Django, SQL, HTML/CSS</li>
+        <li><b>Features:</b> CRUD operations, login system, database integration</li>
+      </ul>
+      <a href="https://github.com/yourusername/employee-management-system" target="_blank">🔗 GitHub Repo</a>
+    </div>
+
+    <div class="card">
+      
+      <h3>Weather Dashboard</h3>
+      <p>Developed a weather dashboard that fetches live weather data using an API. Displays temperature, humidity, and forecasts with a clean UI.</p>
+      <ul>
+        <li><b>Tech:</b> Python, Flask/Streamlit, OpenWeather API</li>
+        <li><b>Features:</b> Live weather data, city search, API integration</li>
+      </ul>
+      <a href="https://github.com/yourusername/weather-dashboard" target="_blank">🔗 GitHub Repo</a>
+    </div>
+  </div>
+</section>
+
+<!-- Certificates -->
+<section id="certificates" class="page">
+  <h2>Certificates</h2>
+  <div class="certificates-container">
+    <div class="certificate-card">
+      <p>Python Certificate 1</p>
+      <iframe src="files/py1.pdf"></iframe>
+      <a href="files/py1.pdf" target="_blank"><i class="fa-solid fa-eye"></i> View</a>
+      <a href="files/py1.pdf" download><i class="fa-solid fa-download"></i> Download</a>
+    </div>
+    <div class="certificate-card">
+      <p>Python Certificate 2</p>
+      <iframe src="files/py2.pdf"></iframe>
+      <a href="files/py2.pdf" target="_blank"><i class="fa-solid fa-eye"></i> View</a>
+      <a href="files/py2.pdf" download><i class="fa-solid fa-download"></i> Download</a>
+    </div>
+    <div class="certificate-card">
+      <p>Power BI Certificate</p>
+      <img src="images/poweBi.jpg" alt="Power BI Certificate">
+      <a href="images/poweBi.jpg" target="_blank"><i class="fa-solid fa-eye"></i> View</a>
+      <a href="images/poweBi.jpg" download><i class="fa-solid fa-download"></i> Download</a>
+    </div>
+  </div>
+</section>
+
+<!-- Resume -->
+<section id="resume" class="page">
+  <h2>My Resume</h2>
+  <p>View  my resume below:</p>
+  <iframe src="images/resume.png" class="resume-viewer"></iframe>
+  <div class="resume-buttons">
+    <a href="files/Shreyas G Resume.pdf" target="_blank"><i class="fa-solid fa-eye"></i> View Resume </a>
+    <a href="files/Shreyas G Resume.pdf" download><i class="fa-solid fa-download"></i> Download Resume</a>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="page">
+  <h1>Contact Me</h1>
+  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=shreyashrey2703@gmail.com" target="_blank" class="contact-row gmail">
+    <img src="images/gmail.png" alt="Email Icon" class="contact-img"><span>G-Mail &#128386;</span>
+  </a>
+  <a href="tel:+916360102050" class="contact-row phone">
+    <img src="images/phonecl.png" alt="Phone Icon" class="contact-img"><span>Phone Number &#128382;</span>
+  </a>
+  <a href="https://linkedin.com/in/shreyas" target="_blank" class="contact-row linkedin">
+    <img src="images/linkdin.png" alt="LinkedIn Icon" class="contact-img"><span>LinkedIn &#128204;</span>
+  </a>
+  <a href="https://github.com/shreyas" target="_blank" class="contact-row github">
+    <img src="images/github.png" alt="GitHub Icon" class="contact-img"><span>GitHub &#128279;</span>
+  </a>
+  <a href="https://Whatsapp.com/shreyas" target="_blank" class="contact-row github">
+    <img src="images/Whatsapp.png" alt="Whatsapp" class="contact-img"><span>Whatsapp &#128494;</span>
+  </a>
+</section>
+
+</div>
+
+<script>
+// Dark mode toggle
+document.getElementById("darkToggle").addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+});
+
+// Page navigation
+function showPage(pageId){
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(pageId).classList.add("active");
+  document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
+  if(document.getElementById("link-"+pageId)){
+    document.getElementById("link-"+pageId).classList.add("active");
+  }
+}
+
+</script>
+</body>
+</html>
